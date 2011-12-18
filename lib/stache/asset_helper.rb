@@ -16,7 +16,7 @@ module Stache
         template_path = locate_template_for(base_path, file)
         if template_path
           template = ::File.open(template_path, "rb")
-          options = {:type => "text/html", :id => "#{file.dasherize.underscore}_template"}
+          options = {:type => "text/html", :id => "#{file.dasherize.underscore}"}
           options[:class] = "partial" if defined?(is_partial) && is_partial
           content_tag(:script, template.read.html_safe, options)
         else

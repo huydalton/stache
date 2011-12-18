@@ -16,7 +16,7 @@ describe Stache::AssetHelper do
       File.stub!(:open).with(Rails.root.join("app/views/widgets/_oh_herro.html.mustache"), "rb").
         and_return(StringIO.new("{{ awyeah }}"))
 
-      helper.template_include_tag("widgets/oh_herro").should == "<script id=\"oh_herro_template\" type=\"text/html\">{{ awyeah }}</script>"
+      helper.template_include_tag("widgets/oh_herro").should == "<script id=\"oh_herro\" type=\"text/html\">{{ awyeah }}</script>"
     end
     it "uses the template_base_path config setting to locate the template" do
       Stache.configure do |c|
@@ -26,10 +26,10 @@ describe Stache::AssetHelper do
       File.stub!(:open).with(Pathname.new("/tmp/whee/_whooo.html.mustache"), "rb").
         and_return(StringIO.new("{{ awyeah }}"))
         
-      helper.template_include_tag("whooo").should == "<script id=\"whooo_template\" type=\"text/html\">{{ awyeah }}</script>"
+      helper.template_include_tag("whooo").should == "<script id=\"whooo\" type=\"text/html\">{{ awyeah }}</script>"
     end
     it "includes class name partial if source is a hash and partial is defined" do
-      
+      pending "just lazy..."
     end
     it "raises if it cannot find the template" do
       -> { helper.template_include_tag("arrrgh") }.should raise_error(ActionView::MissingTemplate)
