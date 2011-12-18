@@ -4,6 +4,10 @@ module Stache
     # template_include_tag("shared/test_thing")
     def template_include_tag(*sources)
       sources.collect do |source|
+        if source.is_a?(Hash)
+          is_partial = !!source[:partial]
+          source = source[:path]
+        end
         exploded = source.split("/")
         file = exploded.pop
         file = file.split(".").first
@@ -12,7 +16,9 @@ module Stache
         template_path = locate_template_for(base_path, file)
         if template_path
           template = ::File.open(template_path, "rb")
-          content_tag(:script, template.read.html_safe, :type => "text/html", :id => "#{file.dasherize.underscore}_template")
+          options = {:type => "text/html", :id => "#{file.dasherize.underscore}_template"}
+          options[:class] = "partial" if defined?(is_partial) && is_partial
+          content_tag(:script, template.read.html_safe, options)
         else
           raise ActionView::MissingTemplate.new(potential_paths(base_path, file), file, [base_path], false, { :handlers => [:mustache] })
         end

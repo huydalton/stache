@@ -28,6 +28,9 @@ describe Stache::AssetHelper do
         
       helper.template_include_tag("whooo").should == "<script id=\"whooo_template\" type=\"text/html\">{{ awyeah }}</script>"
     end
+    it "includes class name partial if source is a hash and partial is defined" do
+      
+    end
     it "raises if it cannot find the template" do
       -> { helper.template_include_tag("arrrgh") }.should raise_error(ActionView::MissingTemplate)
     end
